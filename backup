@@ -1,0 +1,25 @@
+  projects: [
+    { name: 'setup', testMatch: 'auth.setup.ts' }
+    ,
+    {
+      name: 'articleSetup',
+      testMatch: 'newArticle.setup.ts',
+      dependencies: ['setup'],
+      teardown: 'articleCleanUp.setup.ts'
+    },
+    {
+      name: 'articleCleanUp',
+      testMatch: 'articleCleanUp.setup.ts'
+    },
+    {
+      name: 'regression',
+      use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
+      dependencies: ['setup']
+    },
+    {
+      name: 'likeCounter',
+      testMatch: 'likesCounter.spec.ts',
+      use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
+      dependencies: ['articleSetup']
+    }
+  ]
